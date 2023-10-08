@@ -1,102 +1,91 @@
 package org.example;
 
+/**
+ * The Car class represents specific information about an automobile.
+ * It extends the Transport class and includes additional attributes
+ * such as the number of doors and whether it is electric.
+ */
 public class Car extends Transport {
-    private int numberOfDoors;
+    private final int numberOfDoors;
+    private final boolean isElectric;
 
-    private Car(String brand, String model, int year, int numberOfDoors) {
-        super(brand, model, year);
-        this.numberOfDoors = numberOfDoors;
+    /**
+     * Constructs a new Car object using the provided builder.
+     *
+     * @param builder The builder used to construct the Car object.
+     */
+    private Car(Builder builder) {
+        super(builder);
+        this.numberOfDoors = builder.numberOfDoors;
+        this.isElectric = builder.isElectric;
     }
 
+    /**
+     * Get the number of doors of the car.
+     *
+     * @return The number of doors of the car.
+     */
     public int getNumberOfDoors() {
         return numberOfDoors;
     }
 
-    @Override
-    public String toString() {
-        return "Car{" +
-                "brand='" + brand + '\'' +
-                ", model='" + model + '\'' +
-                ", year=" + year +
-                ", numberOfDoors=" + numberOfDoors +
-                '}';
+    /**
+     * Check if the car is electric.
+     *
+     * @return True if the car is electric, false otherwise.
+     */
+    public boolean isElectric() {
+        return isElectric;
     }
 
     /**
-     * Клас-білдер для створення об'єктів Car.
+     * The Builder class for constructing a Car object with parameters.
      */
-    public static class Builder {
-        private String brand;
-        private String model;
-        private int year;
+    public static class Builder extends Transport.Builder {
         private int numberOfDoors;
+        private boolean isElectric;
 
         /**
-         * Встановлює бренд транспорту.
+         * Constructs a new Builder for creating a Car object.
          *
-         * @param brand бренд транспорту
-         * @return посилання на поточний об'єкт Builder
+         * @param brand The brand of the car.
+         * @param model The model of the car.
+         * @param type  The type of the car.
          */
-        public Builder setBrand(String brand) {
-            if (brand == null || brand.isEmpty()) {
-                throw new IllegalArgumentException("Бренд не може бути пустим");
-            }
-            this.brand = brand;
-            return this;
+        public Builder(String brand, String model, double type) {
+            super(brand, model, type);
         }
 
         /**
-         * Встановлює модель транспорту.
+         * Set the number of doors for the car.
          *
-         * @param model модель транспорту
-         * @return посилання на поточний об'єкт Builder
-         */
-        public Builder setModel(String model) {
-            if (model == null || model.isEmpty()) {
-                throw new IllegalArgumentException("Модель не може бути пустою");
-            }
-            this.model = model;
-            return this;
-        }
-
-        /**
-         * Встановлює рік виробництва транспорту.
-         *
-         * @param year рік виробництва
-         * @return посилання на поточний об'єкт Builder
-         */
-        public Builder setYear(int year) {
-            if (year < 0) {
-                throw new IllegalArgumentException("Рік не може бути від'ємним");
-            }
-            this.year = year;
-            return this;
-        }
-
-        /**
-         * Встановлює кількість дверей автомобіля.
-         *
-         * @param numberOfDoors кількість дверей
-         * @return посилання на поточний об'єкт Builder
+         * @param numberOfDoors The number of doors to set.
+         * @return The Builder object for method chaining.
          */
         public Builder setNumberOfDoors(int numberOfDoors) {
-            if (numberOfDoors < 0) {
-                throw new IllegalArgumentException("Кількість дверей не може бути від'ємною");
-            }
             this.numberOfDoors = numberOfDoors;
             return this;
         }
 
         /**
-         * Побудова об'єкта Car за допомогою Builder.
+         * Set whether the car is electric or not.
          *
-         * @return новий об'єкт Car з параметрами з Builder
+         * @param isElectric True if the car is electric, false otherwise.
+         * @return The Builder object for method chaining.
          */
+        public Builder setElectric(boolean isElectric) {
+            this.isElectric = isElectric;
+            return this;
+        }
+
+        /**
+         * Build a Car object using the information provided in the Builder.
+         *
+         * @return A new Car object.
+         */
+        @Override
         public Car build() {
-            if (brand == null || model == null) {
-                throw new IllegalStateException("Бренд і модель повинні бути встановлені");
-            }
-            return new Car(brand, model, year, numberOfDoors);
+            return new Car(this);
         }
     }
 }
