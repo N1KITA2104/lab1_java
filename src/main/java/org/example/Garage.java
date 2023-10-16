@@ -1,36 +1,35 @@
 package org.example;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Garage {
-    private final Map<Car, Date> carsList;
+    private final Map<Car, LocalDate> listCars;
     private final int capacity;
 
     public Garage(int capacity) {
-        carsList = new HashMap<>();
+        listCars = new HashMap<>();
         this.capacity = capacity;
     }
 
     public void addCar(Car car) {
-        if (carsList.size() >= capacity) {
+        if (listCars.size() >= capacity) {
             throw new IllegalArgumentException("The garage is full. Cannot add more cars.");
         }
 
-        Date currentDate = new Date();
-        carsList.put(car, currentDate);
+        listCars.put(car, LocalDate.now());
     }
 
     public void removeCar(Car car) {
-        if (!carsList.containsKey(car)) {
+        if (!listCars.containsKey(car)) {
             throw new IllegalArgumentException("Car not found in the garage.");
         }
 
-        carsList.remove(car);
+        listCars.remove(car);
     }
 
-    public Map<Car, Date> getCarsInfo() {
-        return carsList;
+    public Map<Car, LocalDate> getInformation() {
+        return listCars;
     }
 }

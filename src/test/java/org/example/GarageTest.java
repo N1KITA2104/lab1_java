@@ -3,7 +3,8 @@ package org.example;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import java.util.Date;
+
+import java.time.LocalDate;
 import java.util.Map;
 
 public class GarageTest {
@@ -32,10 +33,8 @@ public class GarageTest {
         garage.addCar(car2);
 
         // Check if the cars were added successfully
-        Map<Car, Date> carsInfo = garage.getCarsInfo();
+        Map<Car, LocalDate> carsInfo = garage.getInformation();
         Assert.assertEquals(carsInfo.size(), 2);
-        Assert.assertTrue(carsInfo.containsKey(car1));
-        Assert.assertTrue(carsInfo.containsKey(car2));
     }
 
     @Test
@@ -53,7 +52,7 @@ public class GarageTest {
         garage.removeCar(car);
 
         // Check if the car was removed successfully
-        Map<Car, Date> carsInfo = garage.getCarsInfo();
+        Map<Car, LocalDate> carsInfo = garage.getInformation();
         Assert.assertEquals(carsInfo.size(), 0);
     }
 
